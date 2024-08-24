@@ -1,0 +1,46 @@
+definitions:
+  dto.Order:
+    properties:
+      data:
+        items:
+          type: integer
+        type: array
+      id:
+        type: string
+    type: object
+  responses.MessageResponse:
+    properties:
+      message:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /api/order/{order_id}:
+    get:
+      consumes:
+      - application/json
+      description: Get order by ID
+      parameters:
+      - description: Order ID
+        in: path
+        name: order_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Order data
+          schema:
+            $ref: '#/definitions/dto.Order'
+        "404":
+          description: Order with that ID not found
+          schema:
+            $ref: '#/definitions/responses.MessageResponse'
+        "500":
+          description: Internal server error
+      summary: Get Order
+      tags:
+      - Orders
+swagger: "2.0"

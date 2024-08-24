@@ -1,0 +1,5 @@
+CREATE TABLE ORDERS
+(
+    id   VARCHAR PRIMARY KEY,
+    data JSONB NOT NULL
+);
