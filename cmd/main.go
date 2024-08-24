@@ -10,6 +10,7 @@ import (
 	"l0/internal/delivery/routers"
 	"l0/internal/infrastructure/config"
 	"l0/internal/infrastructure/database"
+	"l0/internal/infrastructure/natsadapter"
 	"l0/pkg/log"
 )
 
@@ -29,6 +30,9 @@ func main() {
 	orderCache := cache.InitCache()
 	orderCache.LoadData(db)
 	logger.Info().Msg("Cache Initialized")
+
+	natsadapter.InitNATSService(db, orderCache, logger).Listen()
+	logger.Info().Msg("Nats Initialized")
 
 	routers.InitRouting(router, db, orderCache, logger)
 	logger.Info().Msg("Routing Initialized")
